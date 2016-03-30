@@ -10,11 +10,13 @@
             <field name="name">course.form</field>
             <field name="model">openacademy.course</field>
             <field name="arch" type="xml">
+                
                 <form string="Course Form">
                     <sheet>
                         <group>
                             <field name="name"/>
                             <field name="description"/>
+                            <field name="responsible_id"/>
                         </group>
                     </sheet>
                 </form>
@@ -72,6 +74,18 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
+                <!-- override the automatically generated list view for courses -->
+        <record model="ir.ui.view" id="course_tree_view">
+            <field name="name">course.tree</field>
+            <field name="model">openacademy.course</field>
+            <field name="arch" type="xml">
+                <tree string="Course Tree">
+                    <field name="name"/>
+                    <field name="responsible_id"/>
+                </tree>
+            </field>
+        </record>
+
 
         <menuitem id="session_menu" name="Sessions"
                   parent="openacademy_menu"
