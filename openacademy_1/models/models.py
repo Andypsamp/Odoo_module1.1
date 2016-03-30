@@ -1,8 +1,22 @@
-# -*- coding: utf-8 -*-
+class Course(models.Model):
+    _name = 'openacademy.course'
 
-from openerp import models, fields, api
+    name = fields.Char(string="Title", required=True)
+    description = fields.Text()
+Tambien tenemos que modificar el archivo xml demo.xml, añadiendo el siguiente <record>:
 
-# class openacademy(models.Model):
-#     _name = 'openacademy.openacademy'
+<record model="openacademy.course" id="course0">
+            <field name="name">Course 0</field>
+            <field name="description">Course 0's description
 
-#     name = fields.Char()
+Can have multiple lines
+            </field>
+        </record>
+        <record model="openacademy.course" id="course1">
+            <field name="name">Course 1</field>
+            <!-- no description for this one -->
+        </record>
+        <record model="openacademy.course" id="course2">
+            <field name="name">Course 2</field>
+            <field name="description">Course 2's description</field>
+        </record>
