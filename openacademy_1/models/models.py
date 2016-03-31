@@ -46,3 +46,20 @@ taken_seats = fields.Float(string="Taken seats", compute='_taken_seats')
             else:
                 r.taken_seats = 100.0 * len(r.attendee_ids) / r.seats
         active = fields.Boolean(default=True)
+
+@api.onchange('seats', 'attendee_ids')
+    def _verify_valid_seats(self):
+        if self.seats < 0:
+            return {
+                'warning': {
+                    'title': "Incorrect 'seats' value",
+                    'message': "The number of available seats may not be negative",
+                },
+            }
+        if self.seats < len(self.attendee_ids):
+            return {
+                'warning': {
+                    'title': "Too many attendees",
+                    'message': "Increase seats or remove excess attendees",
+                },
+            }
