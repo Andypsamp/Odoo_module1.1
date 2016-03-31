@@ -42,6 +42,7 @@
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">Create the first course
                 </p>
+                <field name="context" eval="{'search_default_my_courses': 1}"/>
             </field>
         </record>
         <record model="ir.ui.view" id="course_search_view">
@@ -49,6 +50,12 @@
             <field name="model">openacademy.course</field>
             <field name="arch" type="xml">
                 <search>
+                    <filter name="my_courses" string="My Courses"
+                            domain="[('responsible_id', '=', uid)]"/>
+                    <group string="Group By">
+                        <filter name="by_responsible" string="Responsible"
+                                context="{'group_by': 'responsible_id'}"/>
+                    </group>
                     <field name="name"/>
                     <field name="description"/>
                 </search>
@@ -95,6 +102,27 @@
                           color="instructor_id">
                     <field name="name"/>
                 </calendar>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="session_gantt_view">
+            <field name="name">session.gantt</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <gantt string="Session Gantt" color="course_id"
+                       date_start="start_date" date_delay="hours"
+                       default_group_by='instructor_id'>
+                    <field name="view_mode">tree,form,calendar,gantt</field>
+                </gantt>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="openacademy_session_graph_view">
+            <field name="name">openacademy.session.graph</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <graph string="Participations by Courses">
+                    <field name="course_id"/>
+                     <field name="view_mode">tree,form,calendar,gantt,graph</field>
+                </graph>
             </field>
         </record>
         <record model="ir.actions.act_window" id="session_list_action">
