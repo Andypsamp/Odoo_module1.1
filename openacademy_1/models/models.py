@@ -72,6 +72,7 @@ hours = fields.Float(string="Duration in hours",
             else:
                 r.taken_seats = 100.0 * len(r.attendee_ids) / r.seats
         active = fields.Boolean(default=True)
+color = fields.Integer()
 
 @api.onchange('seats', 'attendee_ids')
     def _verify_valid_seats(self):
