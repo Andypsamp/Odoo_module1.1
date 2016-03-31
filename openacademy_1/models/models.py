@@ -25,6 +25,28 @@ Can have multiple lines
             <field name="name">Course 2</field>
             <field name="description">Course 2's description</field>
         </record>
+@api.multi
+    def copy(self, default=None):
+        default = dict(default or {})
+
+        copied_count = self.search_count(
+            [('name', '=like', u"Copy of {}%".format(self.name))])
+        if not copied_count:
+            new_name = u"Copy of {}".format(self.name)
+        else:
+            new_name = u"Copy of {} ({})".format(self.name, copied_count)
+
+        default['name'] = new_name
+        return super(Course, self).copy(default)
+sql_constraints = [
+        ('name_description_check',
+         'CHECK(name != description)',
+         "The title of the course should not be the description"),
+
+        ('name_unique',
+         'UNIQUE(name)',
+         "The course title must be unique"),
+    ]
 class Session(models.Model):
     _name = 'openacademy.session'
 instructor_id = fields.Many2one('res.partner', string="Instructor",
@@ -63,3 +85,16 @@ taken_seats = fields.Float(string="Taken seats", compute='_taken_seats')
                     'message': "Increase seats or remove excess attendees",
                 },
             }
+from openerp import models, fields, api, exceptions
+@api.constrains('instructor_id', 'attendee_ids')
+    def _check_instructor_not_in_attendees(self):
+        for r in self:
+            if r.instructor_id and r.instructor_id in r.attendee_ids:
+                raise exceptions.ValidationError("A session's instructor can't be an attendee")
+
+@api.constrains('instructor_id', 'attendee_ids')
+    def _check_instructor_not_in_attendees(self):
+        for r in self:
+            if r.instructor_id and r.instructor_id in r.attendee_ids:
+                raise exceptions.ValidationError("A session's instructor can't be an attendee")
+
