@@ -27,7 +27,9 @@ Can have multiple lines
         </record>
 class Session(models.Model):
     _name = 'openacademy.session'
-instructor_id = fields.Many2one('res.partner', string="Instructor")
+instructor_id = fields.Many2one('res.partner', string="Instructor",
+        domain=['|', ('instructor', '=', True),
+                     ('category_id.name', 'ilike', "Teacher")])
     course_id = fields.Many2one('openacademy.course',
         ondelete='cascade', string="Course", required=True)
     name = fields.Char(required=True)
