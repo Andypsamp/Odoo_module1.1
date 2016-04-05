@@ -1,8 +1,8 @@
 # Odoo_module1.1
-LO NECESARIO
+## LO NECESARIO ##
 1-Tener una maquina virtual con odoo
 2-putty(en caso de trabajar con windows)
-EMPEZAMOS
+##EMPEZAMOS##
 1-Lo primero que debemos hacer es iniciar nuestro odoo para ver que todo funciona correctamente
 esto se hace desde la terminal de putty con los siguientes comandos:
 cd /opt/odoo
@@ -13,7 +13,7 @@ y lanzamos nuestra base ./odoo.py
 YA PODEMOS EMPEZAR CON EL CODIGO
 Lo primero que debemos modificar son todos los siguientes archivos:
 1-en openrp.py sustituimos todo el contenido por el que viene a continuacion:
-# -*- coding: utf-8 -*-
+## -*- coding: utf-8 -*-##
 {
     'name': "Open Academy",
 
@@ -49,12 +49,12 @@ Lo primero que debemos modificar son todos los siguientes archivos:
     ],
 }
 
-2-openacademy/init.py
+##2-openacademy/init.py##
 # -*- coding: utf-8 -*-
 from . import controllers
 from . import models
 
-3-openacademy/controllers.py
+##3-openacademy/controllers.py##
 # -*- coding: utf-8 -*-
 from openerp import http
 
@@ -76,7 +76,7 @@ from openerp import http
 #             'object': obj
 #         })
 
-3-demo.xml
+##3-demo.xml
 <openerp>
     <data>
         <!--  -->
@@ -103,7 +103,7 @@ from openerp import http
     </data>
 </openerp>
 
-4-models.py
+##4-models.py
 # -*- coding: utf-8 -*-
 
 from openerp import models, fields, api
